@@ -1,6 +1,6 @@
 export async function generatePlaylist(prompt) {
   const response = await fetch(
-    "http://localhost:3001/api/generate-playlist",
+    "https://bloom-api-yd4r.onrender.com/api/generate-playlist",
     {
       method: "POST",
       headers: {

@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import Groq from "groq-sdk";
-import { masterPrompt } from "./prompts/masterPrompt.js";
+import { masterPrompt } from "./prompts/temp.js";
 
 console.log(masterPrompt);
 

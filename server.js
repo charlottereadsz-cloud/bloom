@@ -22,6 +22,8 @@ const groq = new Groq({
 app.get("/", (req, res) => {
   res.json({
     message: "Playlist AI Server draait!",
+
+
   });
 });
 
@@ -96,6 +98,50 @@ console.log(
     `https://accounts.spotify.com/authorize?${params}`
   );
 });
+
+app.get("/api/spotify/callback", async (req, res) => {
+  const code = req.query.code;
+
+  try {
+    const response = await axios.post(
+      "https://accounts.spotify.com/api/token",
+      new URLSearchParams({
+        grant_type: "authorization_code",
+        code,
+        redirect_uri:
+          process.env.SPOTIFY_REDIRECT_URI,
+      }),
+      {
+        headers: {
+          Authorization:
+            "Basic " +
+            Buffer.from(
+              `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+            ).toString("base64"),
+          "Content-Type":
+            "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    const accessToken =
+      response.data.access_token;
+
+    res.redirect(
+      `https://bloom-psi-henna.vercel.app/?spotify_token=${accessToken}`
+    );
+  } catch (error) {
+    console.error(
+      "Spotify callback error:",
+      error.response?.data || error.message
+    );
+
+    res.status(500).send(
+      "Spotify login failed"
+    );
+  }
+});
+
 app.listen(3001, () => {
   console.log("Server draait op poort 3001");
 });

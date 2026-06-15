@@ -268,6 +268,25 @@ const [showSongs, setShowSongs] =
 
   Save Playlist
 </button>  
+
+<button
+  onClick={() =>
+    console.log("Export:", playlist)
+  }
+  style={{
+    background: "#1DB954",
+    color: "white",
+    border: "none",
+    padding: "12px 24px",
+    borderRadius: "999px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    marginLeft: "12px",
+  }}
+>
+  🎵 Export to Spotify
+</button>
+
       </div>
 
     <div

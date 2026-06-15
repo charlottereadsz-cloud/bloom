@@ -249,7 +249,7 @@ if (uris.length > 0) {
  console.log("PLAYLIST ID:", playlistId);
 console.log("FIRST URI:", uris[0]);
 console.log("TOKEN EXISTS:", !!token);
- await axios.post(
+const addTracksResponse = await axios.post(
   `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
   {
     uris: [uris[0]],
@@ -257,13 +257,32 @@ console.log("TOKEN EXISTS:", !!token);
   {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
   }
 );
+
+console.log("TRACK ADD RESPONSE:");
+console.log(addTracksResponse.data);
 }    
 
 res.json(playlist.data);
   } catch (error) {
+const addTracksResponse = await axios.post(
+  `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+  {
+    uris: [uris[0]],
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }
+);
+
+console.log("TRACK ADD RESPONSE:");
+console.log(addTracksResponse.data);    
   console.error("==========");
   console.error("SPOTIFY ERROR:");
   console.error(

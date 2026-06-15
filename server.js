@@ -185,8 +185,8 @@ app.post("/api/spotify/create-playlist", async (req, res) => {
 
     const userId = me.data.id;
 
-    const playlist = await axios.post(
-      `https://api.spotify.com/v1/users/${userId}/playlists`,
+   const playlist = await axios.post(
+  "https://api.spotify.com/v1/me/playlists",
       {
         name,
         description,

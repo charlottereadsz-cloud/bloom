@@ -142,6 +142,30 @@ app.get("/api/spotify/callback", async (req, res) => {
   }
 });
 
+app.get("/api/spotify/me", async (req, res) => {
+  try {
+    const token = req.headers.authorization
+      ?.replace("Bearer ", "");
+
+    const response = await axios.get(
+      "https://api.spotify.com/v1/me",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(error.response?.data);
+
+    res.status(500).json({
+      error: "Failed to get user",
+    });
+  }
+});
+
 app.listen(3001, () => {
   console.log("Server draait op poort 3001");
 });

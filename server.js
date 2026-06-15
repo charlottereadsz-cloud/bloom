@@ -206,7 +206,62 @@ console.log(songs);
       }
     );
 
-    res.json(playlist.data);
+ const playlistId = playlist.data.id;   
+
+const uris = [];
+
+for (const song of songs) {
+  try {
+    const search = await axios.get(
+      "https://api.spotify.com/v1/search",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          q: `${song.song} ${song.artist}`,
+          type: "track",
+          limit: 1,
+        },
+      }
+    );
+
+    const track =
+      search.data.tracks.items[0];
+
+    if (track) {
+      uris.push(track.uri);
+    }
+  } catch (err) {
+    console.log(
+      "Could not find:",
+      song.song
+    );
+  }
+}
+
+console.log(
+  "TRACKS FOUND:",
+  uris.length
+);
+
+if (uris.length > 0) {
+  await axios.post(
+    `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+    {
+      uris,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type":
+          "application/json",
+      },
+    }
+  );
+}    
+
+res.json(playlist.data);
   } catch (error) {
   console.error("==========");
   console.error("SPOTIFY ERROR:");

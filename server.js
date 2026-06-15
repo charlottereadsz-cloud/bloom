@@ -246,19 +246,20 @@ console.log(
 );
 
 if (uris.length > 0) {
-  await axios.post(
-    `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
-    {
-      uris,
+ console.log("PLAYLIST ID:", playlistId);
+console.log("FIRST URI:", uris[0]);
+console.log("TOKEN EXISTS:", !!token);
+ await axios.post(
+  `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+  {
+    uris: [uris[0]],
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type":
-          "application/json",
-      },
-    }
-  );
+  }
+);
 }    
 
 res.json(playlist.data);

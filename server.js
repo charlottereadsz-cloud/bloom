@@ -166,6 +166,50 @@ app.get("/api/spotify/me", async (req, res) => {
   }
 });
 
+app.post("/api/spotify/create-playlist", async (req, res) => {
+  try {
+    const token = req.headers.authorization
+      ?.replace("Bearer ", "");
+
+    const { name, description } = req.body;
+
+    const me = await axios.get(
+      "https://api.spotify.com/v1/me",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const userId = me.data.id;
+
+    const playlist = await axios.post(
+      `https://api.spotify.com/v1/users/${userId}/playlists`,
+      {
+        name,
+        description,
+        public: false,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    res.json(playlist.data);
+  } catch (error) {
+    console.error(
+      error.response?.data || error.message
+    );
+
+    res.status(500).json({
+      error: "Failed to create playlist",
+    });
+  }
+});
+
 app.listen(3001, () => {
   console.log("Server draait op poort 3001");
 });

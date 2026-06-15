@@ -1,6 +1,6 @@
 import SpotifyButton from
 "./components/SpotifyButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import heart from "./assets/icons/heart.png";
 
@@ -17,6 +17,31 @@ function App() {
   const [showSaved, setShowSaved] = useState(false);
 const [selectedPlaylist, setSelectedPlaylist] =
   useState(null);
+useEffect(() => {
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const token =
+    params.get("spotify_token");
+
+  if (token) {
+    localStorage.setItem(
+      "spotify_token",
+      token
+    );
+
+    window.history.replaceState(
+      {},
+      "",
+      "/"
+    );
+
+    console.log(
+      "Spotify token opgeslagen!"
+    );
+  }
+}, []);  
   const handleGeneratePlaylist = async () => {
     setLoading(true);
 

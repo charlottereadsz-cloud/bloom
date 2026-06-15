@@ -270,9 +270,31 @@ const [showSongs, setShowSongs] =
 </button>  
 
 <button
-  onClick={() =>
-    console.log("Export:", playlist)
-  }
+ onClick={async () => {
+  const token =
+    localStorage.getItem("spotify_token");
+
+  const response = await fetch(
+    "https://bloom-api-yd4r.onrender.com/api/spotify/create-playlist",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name: playlist.title,
+        description:
+          playlist.description,
+      }),
+    }
+  );
+
+  const data = await response.json();
+
+  console.log(data);
+}}
   style={{
     background: "#1DB954",
     color: "white",

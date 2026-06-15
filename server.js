@@ -277,6 +277,9 @@ if (uris.length > 0) {
   console.log("LAST URI:", uris[uris.length - 1]);
   console.log("TOKEN EXISTS:", !!token);
 
+ console.log("ADDING TRACKS...");
+console.log(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`); 
+  
   const addTracksResponse = await axios.post(
     `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
     {
@@ -297,14 +300,20 @@ if (uris.length > 0) {
 res.json(playlist.data);
 } catch (error) {
   console.error("==========");
-  console.error("SPOTIFY ERROR:");
-  console.error(error.response?.data);
+  console.error("FULL SPOTIFY ERROR:");
+
+  console.error(
+    JSON.stringify(error.response?.data, null, 2)
+  );
 
   console.error("STATUS:");
   console.error(error.response?.status);
 
-  console.error("MESSAGE:");
-  console.error(error.message);
+  console.error("URL:");
+  console.error(error.config?.url);
+
+  console.error("METHOD:");
+  console.error(error.config?.method);
 
   console.error("==========");
 

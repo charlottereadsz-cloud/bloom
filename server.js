@@ -75,6 +75,7 @@ res.json(playlist);
 }
 });
 app.get("/api/spotify/login", (req, res) => {
+console.log(process.env.SPOTIFY_REDIRECT_URI);  
   const scope = [
     "playlist-modify-public",
     "playlist-modify-private",

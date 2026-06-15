@@ -1,4 +1,4 @@
-const CLIENT_ID = "0b21ad5fc8314bbebe0e51c191f1c0f2";
+const CLIENT_ID = "408e6f6295814270a49adbab9bed6503";
 
 const REDIRECT_URI =
   "http://127.0.0.1:5173/callback";

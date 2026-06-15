@@ -38,6 +38,8 @@ function getCoverGradient(title) {
   return "linear-gradient(135deg,#F9CBD6,#DCCBFF)";
 }
 function PlaylistResult({ playlist }) {
+ console.log("BLOOM PLAYLIST:", playlist);
+console.log("SONGS:", playlist?.songs); 
   if (!playlist) return null;
 const [showSongs, setShowSongs] =
   useState(false);

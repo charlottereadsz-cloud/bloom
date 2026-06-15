@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import Groq from "groq-sdk";
 import { masterPrompt } from "./prompts/masterPrompt.js";
-
+import axios from "axios";
 console.log(masterPrompt);
 
 dotenv.config({ path: "./.env" });
@@ -74,7 +74,23 @@ res.json(playlist);
   });
 }
 });
+app.get("/api/spotify/login", (req, res) => {
+  const scope = [
+    "playlist-modify-public",
+    "playlist-modify-private",
+  ].join(" ");
 
+  const params = new URLSearchParams({
+    client_id: process.env.SPOTIFY_CLIENT_ID,
+    response_type: "code",
+    redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+    scope,
+  });
+
+  res.redirect(
+    `https://accounts.spotify.com/authorize?${params}`
+  );
+});
 app.listen(3001, () => {
   console.log("Server draait op poort 3001");
 });

@@ -137,16 +137,25 @@ app.get("/api/spotify/callback", async (req, res) => {
     res.redirect(
       `https://bloom-psi-henna.vercel.app/?spotify_token=${accessToken}`
     );
-  } catch (error) {
-    console.error(
-      "Spotify callback error:",
-      error.response?.data || error.message
-    );
+  }catch (error) {
+  console.error("FULL ERROR:");
+  console.error(error);
 
-    res.status(500).send(
-      "Spotify login failed"
-    );
+  if (error.response) {
+    console.error("DATA:");
+    console.error(error.response.data);
+
+    console.error("STATUS:");
+    console.error(error.response.status);
+
+    console.error("HEADERS:");
+    console.error(error.response.headers);
   }
+
+  res.status(500).json({
+    error: "Failed to create playlist",
+  });
+}
 });
 
 app.get("/api/spotify/me", async (req, res) => {

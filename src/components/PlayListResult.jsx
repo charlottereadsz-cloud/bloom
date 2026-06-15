@@ -293,6 +293,8 @@ const [showSongs, setShowSongs] =
     }
   );
 
+console.log("SONGS SENT:", playlist.songs);
+
   const data = await response.json();
 
   console.log(data);

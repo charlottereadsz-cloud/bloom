@@ -20,6 +20,11 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 app.get("/", (req, res) => {
+  const scope = [
+  "playlist-modify-public",
+  "playlist-modify-private",
+  "playlist-read-private",
+].join(" ");
   res.json({
     message: "Playlist AI Server draait!",
 
@@ -85,6 +90,7 @@ console.log(
   const scope = [
     "playlist-modify-public",
     "playlist-modify-private",
+     "playlist-read-private",
   ].join(" ");
  console.log("SCOPES:", scope); 
 

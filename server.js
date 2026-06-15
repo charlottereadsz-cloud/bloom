@@ -86,6 +86,7 @@ console.log(
     "playlist-modify-public",
     "playlist-modify-private",
   ].join(" ");
+ console.log("SCOPES:", scope); 
 
   const params = new URLSearchParams({
     client_id: process.env.SPOTIFY_CLIENT_ID,

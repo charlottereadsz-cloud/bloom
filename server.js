@@ -158,7 +158,14 @@ app.get("/api/spotify/me", async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-    console.error(error.response?.data);
+   console.error("SPOTIFY ERROR:");
+console.error(
+  JSON.stringify(
+    error.response?.data,
+    null,
+    2
+  )
+); 
 
     res.status(500).json({
       error: "Failed to get user",

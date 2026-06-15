@@ -172,7 +172,14 @@ app.post("/api/spotify/create-playlist", async (req, res) => {
     const token = req.headers.authorization
       ?.replace("Bearer ", "");
 
-    const { name, description } = req.body;
+const {
+  name,
+  description,
+  songs,
+} = req.body;   
+
+console.log("SONGS RECEIVED:");
+console.log(songs);
 
     const me = await axios.get(
       "https://api.spotify.com/v1/me",

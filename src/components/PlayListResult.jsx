@@ -286,10 +286,10 @@ const [showSongs, setShowSongs] =
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        name: playlist.title,
-        description:
-          playlist.description,
-      }),
+  name: playlist.title,
+  description: playlist.description,
+  songs: playlist.songs,
+}),
     }
   );
 

@@ -51,11 +51,15 @@ console.log("TOKEN:", token);
       const data = await generatePlaylist(prompt);
       setPlaylist(data);
     } catch (error) {
-      console.error(error);
-    }
+     +console.log("ERROR DATA:");
+console.dir(error.response?.data, {
+  depth: null,
+});
 
-    setLoading(false);
-  };
+console.log("ERROR HEADERS:");
+console.dir(error.response?.headers, {
+  depth: null,
+});
 
   return (
     <div
@@ -223,5 +227,5 @@ console.log("TOKEN:", token);
     </div>
   );
 }
-
-export default App;
+  }
+export default App;}

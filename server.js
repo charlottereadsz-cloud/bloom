@@ -137,37 +137,17 @@ app.get("/api/spotify/callback", async (req, res) => {
     res.redirect(
       `https://bloom-psi-henna.vercel.app/?spotify_token=${accessToken}`
     );
-  }catch (error) {
-  console.error("==========");
+  } catch (error) {
+    console.error(
+      "Spotify callback error:",
+      error.response?.data || error.message
+    );
 
-  console.log("ERROR DATA:");
-  console.dir(error.response?.data, {
-    depth: null,
-  });
-
-  console.log("ERROR HEADERS:");
-  console.dir(error.response?.headers, {
-    depth: null,
-  });
-
-  console.error("STATUS:");
-  console.error(error.response?.status);
-
-  console.error("MESSAGE:");
-  console.error(error.message);
-
-  console.error("==========");
-
-  res.status(500).json({
-    error: "Failed to create playlist",
-  });
-}
-
-  res.status(500).json({
-    error: "Failed to create playlist",
-  });
-}
-);
+    res.status(500).send(
+      "Spotify login failed"
+    );
+  }
+});
 
 app.get("/api/spotify/me", async (req, res) => {
   try {
@@ -302,7 +282,7 @@ console.log("PLAYLIST OWNER:");
 console.log(playlistInfo.data.owner.id);
  console.log("ADDING TRACKS...");
 console.log(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`); 
-  
+ console.log("TOKEN SCOPES TEST"); 
   const addTracksResponse = await axios.post(
     `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
     {
@@ -319,6 +299,17 @@ console.log(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`);
   console.log("TRACK ADD RESPONSE:");
   console.log(addTracksResponse.data);
 }
+
+const meAgain = await axios.get(
+  "https://api.spotify.com/v1/me",
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
+
+console.log(meAgain.data);
 
 res.json(playlist.data);
 } catch (error) {

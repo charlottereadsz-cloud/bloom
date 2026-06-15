@@ -158,14 +158,7 @@ app.get("/api/spotify/me", async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-   console.error("SPOTIFY ERROR:");
-console.error(
-  JSON.stringify(
-    error.response?.data,
-    null,
-    2
-  )
-); 
+    
 
     res.status(500).json({
       error: "Failed to get user",
@@ -207,14 +200,21 @@ app.post("/api/spotify/create-playlist", async (req, res) => {
 
     res.json(playlist.data);
   } catch (error) {
-    console.error(
-      error.response?.data || error.message
-    );
+  console.error("==========");
+  console.error("SPOTIFY ERROR:");
+  console.error(
+    JSON.stringify(
+      error.response?.data,
+      null,
+      2
+    )
+  );
+  console.error("==========");
 
-    res.status(500).json({
-      error: "Failed to create playlist",
-    });
-  }
+  res.status(500).json({
+    error: "Failed to create playlist",
+  });
+}
 });
 
 app.listen(3001, () => {

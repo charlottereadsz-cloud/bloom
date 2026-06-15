@@ -25,7 +25,9 @@ useEffect(() => {
   const token =
     params.get("spotify_token");
 
-  if (token) {
+  console.log("URL:", window.location.href);
+console.log("TOKEN:", token);
+    if (token) {
     localStorage.setItem(
       "spotify_token",
       token

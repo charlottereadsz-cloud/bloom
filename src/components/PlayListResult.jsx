@@ -295,9 +295,21 @@ const [showSongs, setShowSongs] =
 
 console.log("SONGS SENT:", playlist.songs);
 
-  const data = await response.json();
+const data = await response.json();
 
-  console.log(data);
+if (data.external_urls?.spotify) {
+  window.open(
+    data.external_urls.spotify,
+    "_blank"
+  );
+}
+
+if (data.id) {
+  window.open(
+    `https://open.spotify.com/playlist/${data.id}`,
+    "_blank"
+  );
+}
 }}
   style={{
     background: "#1DB954",
@@ -312,6 +324,8 @@ console.log("SONGS SENT:", playlist.songs);
 >
   🎵 Export to Spotify
 </button>
+
+alert("Playlist created in Spotify! 🎉");
 
       </div>
 

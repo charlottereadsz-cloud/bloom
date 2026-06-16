@@ -337,6 +337,41 @@ res.json(playlist.data);
 }
 });
 
+app.post("/api/spotify/search-track", async (req, res) => {
+  try {
+    const { song, artist } = req.body;
+
+    const token = process.env.SPOTIFY_ACCESS_TOKEN;
+
+    const response = await axios.get(
+      "https://api.spotify.com/v1/search",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          q: `${song} ${artist}`,
+          type: "track",
+          limit: 1,
+        },
+      }
+    );
+
+    const track =
+      response.data.tracks.items[0];
+
+    res.json({
+      image:
+        track?.album?.images?.[0]?.url,
+    });
+  } catch {
+    res.json({
+      image: null,
+    });
+  }
+});
+
 app.listen(3001, () => {
   console.log("Server draait op poort 3001");
 });
+
